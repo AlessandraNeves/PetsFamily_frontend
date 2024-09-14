@@ -1,0 +1,15 @@
+.home-container {
+    background-image: url(../../assets/img/login.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 450px;
+    max-width: auto;
+    margin: 30px;
+    border: 10px solid #CDA4C7;
+    object-fit: contain;
+}
+
+ 
