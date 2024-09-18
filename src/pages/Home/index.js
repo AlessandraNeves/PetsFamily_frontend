@@ -1,13 +1,12 @@
 import React from "react"
 import './style.css';
-
 import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
+// import Box from '@mui/material/Box';
 
 const Home = () => {
     return (
         <Container className='home-container' >
-            <form>
+            {/* <form>
                 <Box 
                     display="flex" 
                     flexDirection={"column"} 
@@ -26,7 +25,7 @@ const Home = () => {
                     }
                 >                 
                 </Box>
-            </form>
+            </form> */}
         </Container>
     )
 }

@@ -15,30 +15,30 @@ header {
   width: 100%;
   height: 50px;
   left: 0px;
-  background: black;
-}
-
-.user {
-  position: absolute;
-  width: 120px;
-  height: 40px;
   right: 0px;
-  top: 4px;
-  background: url(assets/img/user.png);
-  background-repeat: no-repeat;
-  background-position: 60px;
+  background-color: black;
   display: flex;
-  align-items: center;
+  justify-content: flex-end; 
+  margin: 0px;
+  padding: 0px;
 }
 
-.user span {
+.user-info {
+  display: flex;
+  align-items: center; /* Alinha a imagem e o texto verticalmente */
+  padding: 20px;
   font-family: 'Roboto';
   font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 22px;
-  color: #FFFFFF;
-  margin: 0px 2px;
+  font-size: 12px;
+}
+
+.user-info img {
+  border-radius: 50%; /* Opcional: deixa a imagem circular */
+  margin-right: 20px; /* Espaço entre a imagem e o nome */
+  width: 30px; /* Ajuste conforme necessário */
+  height: 30px; /* Ajuste conforme necessário */
+  background: url(./assets/img/user.png);
+  background-repeat: no-repeat;
 }
 
 
@@ -244,6 +244,7 @@ input::placeholder{
   padding-left: 40px;
 }
 
+/*
 .google-container {
   width: 100vw;
   height: 100vh;
@@ -251,4 +252,4 @@ input::placeholder{
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
+}*/

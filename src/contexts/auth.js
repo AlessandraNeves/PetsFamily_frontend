@@ -20,7 +20,6 @@ export const AuthProvider = ({ children }) => {
 
     const signin = (email, password) => {
         const usersStorage = JSON.parse(localStorage.getItem("users_db"))
-
         const hasUser = usersStorage?.filter((user) =>user.email === email)
 
         if (hasUser?.length) {
@@ -39,7 +38,6 @@ export const AuthProvider = ({ children }) => {
 
     const signup = (email, password) => {
         const usersStorage = JSON.parse(localStorage.getItem("users_db"))
-
         const hasUser = usersStorage?.filter((user) =>user.email === email)
 
         if (hasUser?.length) {

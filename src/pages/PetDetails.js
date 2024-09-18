@@ -25,7 +25,9 @@ import PetsIcon from '@mui/icons-material/PetsOutlined';
 // import PetVaccines from '../components/PetVaccines'
 // import PetHistory from '../components/PetHistory'
 
-export default function PetDetails() {
+
+const PetDetails = () => {
+//export default function PetDetails() {
 
   let { state } = useLocation() ;
 
@@ -123,3 +125,5 @@ export default function PetDetails() {
     </div>
   )
 }
+
+export default PetDetails

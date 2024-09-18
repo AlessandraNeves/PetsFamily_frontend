@@ -1,10 +1,9 @@
 import "../styles/pet.css"
-//import pets from "../assets/json/pets.json"
 import SearchBar from "../components/SearchBar"
 import PetCard from "../components/PetCard"
 import Switch from "@mui/material/Switch"
 
-import {GRAPHQL_GET_PET} from "../constants"
+import { GRAPHQL_GET_PET_QUERY} from "../contexts/constants"
 
 import { useState, useEffect } from "react"
 import { useQuery, gql } from "@apollo/client";
@@ -13,7 +12,7 @@ export default function Pets() {
 
   const [text, setText] = useState("...Carregando, aguarde...");
   const [petList, setPetList] = useState([])
-  const { data, error } = useQuery(gql`${GRAPHQL_GET_PET}`)
+  const { data, error } = useQuery(gql`${ GRAPHQL_GET_PET_QUERY}`)
 
   useEffect(() => {
     if (error) setText(error.message);

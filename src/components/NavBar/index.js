@@ -24,9 +24,9 @@ export default function NavBar() {
                     <li>
                         <a href="/vaccines">Vacinas</a>
                     </li>
-                    <li>
+                    {/* <li>
                         <a href="/signin">Entrar</a>
-                    </li>
+                    </li> */}
                 </ul>
             </nav>
         </div>

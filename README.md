@@ -46,3 +46,10 @@ Para acessar a aplicação `web`, digite http://localhost:80/# no navegador.
 - `$ docker rm <CONTAINER ID>`  -> Para *remover um container*  
 
 Para mais comandos veja a [documentação Docker](https://docs.docker.com/reference/)
+
+---
+
+### Dados para testar Login:
+usuário: petfamilymvp@gmail.com
+
+senha: 1234@5678

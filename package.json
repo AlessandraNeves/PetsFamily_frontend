@@ -16,11 +16,12 @@
     "cors": "^2.8.5",
     "gapi-script": "^1.2.0",
     "graphql": "^16.8.1",
+    "jwt-decode": "^4.0.0",
     "moment": "^2.29.4",
     "node": "^18.20.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-google-login": "^5.2.2",
+    "react-modal": "^3.16.1",
     "react-router-dom": "^6.23.1",
     "react-scripts": "^5.0.1",
     "styled-components": "^6.1.11"

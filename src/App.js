@@ -1,34 +1,31 @@
 import { createContext, useState } from "react"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-import Navbar from "./Navbar"
-import Auth from "./pages/Auth"
+import Navbar from './Navbar'
 import Home from './pages/Home'
 import Pets from './pages/Pets'
 import PetDetails from './pages/PetDetails'
 import Medicines from './pages/Medicines'
 
+// Criação do contexto de autenticação
 export const LoginContext = createContext()
 
 export default function App() {
-
-  const [hasLogin, setLogin] = useState(false);
-  
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+ 
   return (
-    <div>
-      <LoginContext.Provider value={{'hasLogin': hasLogin, setLogin}}>
+    <BrowserRouter>
+      <LoginContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
         <Navbar/>
         <div>
-          <BrowserRouter>
             <Routes>
               <Route path="/" element={<Home/>}></Route>
-              <Route path="/Auth" element={<Auth/>}></Route>
-              <Route path="/Pets" element={<Pets/>}></Route>
-              <Route path="/Pets/:id" element={<PetDetails/>}></Route>
-              <Route path="/Medicines" element={<Medicines/>}></Route>
+              {/* <Route path="/signin" element={<SignIn/>}></Route> */}
+              <Route path="/pets" element={<Pets/>}></Route>
+              <Route path="/pets/:id" element={<PetDetails/>}></Route>
+              <Route path="/medicines" element={<Medicines/>}></Route>
             </Routes>
-          </BrowserRouter>
         </div>
       </LoginContext.Provider>
-    </div>
+    </BrowserRouter>
   )
 }

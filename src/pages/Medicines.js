@@ -1,12 +1,13 @@
-// import '../global.css';
+import '../global.css';
 // import petMedicines from "../assets/json/petMedicines.json"
-
 // import PetMedicines from '../components/PetMedicines'
 // import Box from '@mui/material/Box';
 // import Typography from '@mui/material/Typography';
 // import SearchBar from "../components/SearchBar"
 
 // import { useState } from "react"
+
+const Medicines = () => {
 
 // export default function Medicines() {
 
@@ -33,4 +34,6 @@
 //         </div>
 //     )
 
-// }
+}
+
+export default Medicines

@@ -51,9 +51,7 @@ header {
     margin: 0px 2px;
   }
   
-  .container img {
-    object-fit: contain;
-  }
+
   
   .home-card {
   
@@ -79,6 +77,10 @@ header {
     text-align: left;
   }
   
+  .container img {
+    object-fit: contain;
+  }
+
   .content-login {
     width: 300px;
     height: 280px;

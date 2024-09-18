@@ -2,8 +2,6 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home";
-import SignIn from "./pages/SignIn";
-import SignUp from "./pages/SignUp";
 import Tutors from "./pages/Tutors";
 import Pets from "./pages/Pets";
 import PetDetails from "./pages/PetDetails";
@@ -14,22 +12,22 @@ import useAuth from "./hooks/useAuth";
 
 const PrivateRoute = ({ Component }) => {
     const signed = useAuth();
-    return signed > 0 ? <Component /> : <SignIn />;
+    console.log(signed)
+    //return signed > 0 ? <Component /> : <SignIn />;
 };
 
 const RouterApp = () => {
     return (
         <BrowserRouter>
             <Routes>
-                {/* <Route path="/home" element={<PrivateRoute Component={Home} />} /> */}
                 <Route path="/" element={<Home />} />
                 <Route path="/tutors" element={<PrivateRoute Component={Tutors} />} />
                 <Route path="/pets" element={<PrivateRoute Component={Pets} />} />
                 <Route path="/pets/:id" element={<PrivateRoute Component={PetDetails} />} />
                 <Route path="/medicines" element={<PrivateRoute Component={Medicines} />} />
                 <Route path="/vaccines" element={<PrivateRoute Component={Vaccines} />} />
-                <Route path="/signup" element={<SignUp />} />
-                <Route path="*" element={<SignIn />} />
+                {/* <Route path="/signup" element={<SignUp />} />
+                <Route path="*" element={<SignIn />} /> */}
             </Routes>
         </BrowserRouter>
     );

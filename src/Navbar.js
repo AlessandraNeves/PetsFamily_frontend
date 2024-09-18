@@ -1,61 +1,102 @@
 
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { LOGIN_CLIENT_ID } from "./contexts/constants"
+import { jwtDecode } from 'jwt-decode';
 
-import "./global.css"
-import banner from "./assets/img/banner_pets_family.png"
-import { LoginContext } from "./App"
-import { useContext } from "react"
+import "./global.css";
+import banner from "./assets/img/banner_pets_family.png";
 
 export default function Navbar() {
+    const [ user, setUser ] = useState({})
 
-    const { isLoggedIn } = useContext(LoginContext)
+    function handleCallBackResponse(response) {
+        try {
+            const userObject = jwtDecode(response.credential);
+            setUser(userObject);
+            const signInDiv = document.getElementById("signInDiv");
+            if (signInDiv) {
+                signInDiv.hidden = true;
+            }
+        } catch (error) {
+            console.error("Error decoding JWT:", error);
+        }
+    }
+
+    function handleSignOUt(event) {
+        event.preventDefault(); 
+        setUser({});
+        const signInDiv = document.getElementById("signInDiv");
+        if (signInDiv) {
+            signInDiv.hidden = false;
+        }
+    }
+  
+    useEffect(() => {
+      /* global google */
+      google.accounts.id.initialize({
+        client_id: LOGIN_CLIENT_ID,
+        scope: 'profile',
+        callback: handleCallBackResponse
+      });
+  
+      google.accounts.id.renderButton(
+        document.getElementById("signInDiv"),
+        {theme: "outline", size: "large"}
+      );
+  
+    }, []);
 
     return (
         <nav className="nav">
-            <header>
-                { isLoggedIn === true && 
-                    <div className="user">
-                        <span>Usuário</span>
+            <header >
+                {user && 
+                    <div className="user-info">
+                        <img src={user.picture} alt=""></img>
+                        <h3>{user.name}</h3>
                     </div>
                 } 
             </header>
-            <a href="/">
-                <img className="banner" src={banner} alt="Banner"/>
-            </a>
-            { isLoggedIn !== false?
+            <Link to="/">
+                <img className="banner" src={banner} alt="Banner" />
+            </Link>
+            {Object.keys(user).length !== 0 ? (
                 <ul>
                     <li>
-                        <a href="/Tutor">Tutor</a>
+                        <Link to="/About">Cuidados Pet Family</Link>
                     </li>
                     <li>
-                        <a href="/Pets">Pets</a>
+                        <Link to="/About">Sobre adoção</Link>
                     </li>
                     <li>
-                        <a href="/Medicines">Medicamentos</a>
+                        <Link to="/Tutor">Tutor</Link>
                     </li>
                     <li>
-                        <a href="/Vaccines">Vacinas</a>
+                        <Link to="/Pets">Pets</Link>
                     </li>
                     <li>
-                        <a href="/SignIn">Entrar</a>
-                    </li>
-                </ul>:
-                <ul>
-                    <li>
-                        <a href="/About">Cuidados Pet Family</a>
+                        <Link to="/Medicines">Medicamentos</Link>
                     </li>
                     <li>
-                        <a href="/About">Sobre adoção</a>
+                        <Link to="/Vaccines">Vacinas</Link>
                     </li>
                     <li>
-                        <a href="/About">Nossos Planos</a>
-                    </li>
-                    <li>
-                        <a href="/Auth">Entrar</a>
+                        <button onClick={ (e) => handleSignOUt(e)}>Sair</button>
                     </li>
                 </ul>
-            }
+            ) : (
+                <ul>
+                    <li>
+                        <Link to="/About">Cuidados Pet Family</Link>
+                    </li>
+                    <li>
+                        <Link to="/About">Sobre adoção</Link>
+                    </li>
+                    <li>
+                        <div id="signInDiv">Entrar</div>
+                    </li>
+                </ul>
+            )}
         </nav>
-    )
+    );
 }
-
