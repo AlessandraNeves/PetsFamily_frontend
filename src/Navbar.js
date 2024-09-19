@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { LOGIN_CLIENT_ID } from "./contexts/constants"
 import { jwtDecode } from 'jwt-decode';
 
@@ -9,21 +9,12 @@ import banner from "./assets/img/banner_pets_family.png";
 
 export default function Navbar() {
     const [ user, setUser ] = useState({})
+    const navigate = useNavigate(); // Obtenha o histórico
 
     function handleCallBackResponse(response) {
         try {
             const userObject = jwtDecode(response.credential);
             setUser(userObject);
-
-            // const signInDiv = document.getElementById("signInDiv");
-            // if (signInDiv) {
-            //     signInDiv.hidden = true;
-            // }
-
-            // const signOutDiv = document.getElementById("signOutDiv");
-            // if (signOutDiv) {
-            //     signOutDiv.hidden = false;
-            // }
 
         } catch (error) {
             console.error("Error decoding JWT:", error);
@@ -38,16 +29,7 @@ export default function Navbar() {
     function handleSignOut(event) {
         event.preventDefault(); 
         setUser({});
-
-        // const signInDiv = document.getElementById("signInDiv");
-        // if (signInDiv) {
-        //     signInDiv.hidden = false;
-        // }
-
-        // const signOutDiv = document.getElementById("signOutDiv");
-        // if (signOutDiv) {
-        //     signOutDiv.hidden = true;
-        // }
+        navigate('/');
     }
 
     useEffect(() => {
