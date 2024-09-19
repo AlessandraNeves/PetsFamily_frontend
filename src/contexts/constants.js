@@ -1,9 +1,9 @@
-export const LOGIN_CLIENT_ID = `333612867576-apfbcmsl9mubidi0q5bomn71rmii7pe2.apps.googleusercontent.com`
+export const LOGIN_CLIENT_ID = `1056869302283-kkth400508pp2rs9860b5vsfeeb83bh6.apps.googleusercontent.com`
 export const GRAPHQL_API = `http://localhost:8000/graphql`
 
 export const GRAPHQL_GET_PET_QUERY = 
 `query {
-    animals: allPets{
+    allPets: allPets{
         id
         name
         birthday

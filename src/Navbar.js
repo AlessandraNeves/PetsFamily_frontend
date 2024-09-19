@@ -14,89 +14,102 @@ export default function Navbar() {
         try {
             const userObject = jwtDecode(response.credential);
             setUser(userObject);
-            const signInDiv = document.getElementById("signInDiv");
-            if (signInDiv) {
-                signInDiv.hidden = true;
-            }
+
+            // const signInDiv = document.getElementById("signInDiv");
+            // if (signInDiv) {
+            //     signInDiv.hidden = true;
+            // }
+
+            // const signOutDiv = document.getElementById("signOutDiv");
+            // if (signOutDiv) {
+            //     signOutDiv.hidden = false;
+            // }
+
         } catch (error) {
             console.error("Error decoding JWT:", error);
         }
     }
+  
+    function handleSignIn() {
+        google.accounts.id.prompt(); 
+        console.log("passei");
+    }
 
-    function handleSignOUt(event) {
+    function handleSignOut(event) {
         event.preventDefault(); 
         setUser({});
-        const signInDiv = document.getElementById("signInDiv");
-        if (signInDiv) {
-            signInDiv.hidden = false;
-        }
+
+        // const signInDiv = document.getElementById("signInDiv");
+        // if (signInDiv) {
+        //     signInDiv.hidden = false;
+        // }
+
+        // const signOutDiv = document.getElementById("signOutDiv");
+        // if (signOutDiv) {
+        //     signOutDiv.hidden = true;
+        // }
     }
-  
+
     useEffect(() => {
-      /* global google */
-      google.accounts.id.initialize({
-        client_id: LOGIN_CLIENT_ID,
-        scope: 'profile',
-        callback: handleCallBackResponse
-      });
-  
-      google.accounts.id.renderButton(
-        document.getElementById("signInDiv"),
-        {theme: "outline", size: "large"}
-      );
-  
-    }, []);
+        /* global google */
+        google.accounts.id.initialize({
+          client_id: LOGIN_CLIENT_ID,
+          callback: handleCallBackResponse
+        });
+    
+      }, []);
 
     return (
-        <nav className="nav">
+        <div>
             <header >
-                {user && 
-                    <div className="user-info">
-                        <img src={user.picture} alt=""></img>
-                        <h3>{user.name}</h3>
-                    </div>
-                } 
+                <div className="user-info">
+                    {Object.keys(user).length !== 0 ? (
+                        <>
+                            <img src={user.picture} alt="User" />
+                            <span>{user.name}</span>
+                            <button onClick={handleSignOut}>Sair</button>
+                        </>
+                    ) : (
+                        <button onClick={handleSignIn}>Entrar</button>
+                    )}
+                </div>
             </header>
-            <Link to="/">
-                <img className="banner" src={banner} alt="Banner" />
-            </Link>
-            {Object.keys(user).length !== 0 ? (
-                <ul>
-                    <li>
-                        <Link to="/About">Cuidados Pet Family</Link>
-                    </li>
-                    <li>
-                        <Link to="/About">Sobre adoção</Link>
-                    </li>
-                    <li>
-                        <Link to="/Tutor">Tutor</Link>
-                    </li>
-                    <li>
-                        <Link to="/Pets">Pets</Link>
-                    </li>
-                    <li>
-                        <Link to="/Medicines">Medicamentos</Link>
-                    </li>
-                    <li>
-                        <Link to="/Vaccines">Vacinas</Link>
-                    </li>
-                    <li>
-                        <button onClick={ (e) => handleSignOUt(e)}>Sair</button>
-                    </li>
-                </ul>
-            ) : (
-                <ul>
-                    <li>
-                        <Link to="/About">Cuidados Pet Family</Link>
-                    </li>
-                    <li>
-                        <Link to="/About">Sobre adoção</Link>
-                    </li>
-                    <li>
-                        <div id="signInDiv">Entrar</div>
-                    </li>
-                </ul>
-            )}
-        </nav>
+            <nav className="nav">
+                <Link to="/">
+                    <img className="banner" src={banner} alt="Banner" />
+                </Link>
+                {Object.keys(user).length !== 0 ? (
+                    <ul>
+                        <li>
+                            <Link to="/About">Cuidados Pet Family</Link>
+                        </li>
+                        <li>
+                            <Link to="/About">Sobre adoção</Link>
+                        </li>
+                        <li>
+                            <Link to="/Tutor">Tutor</Link>
+                        </li>
+                        <li>
+                            <Link to="/Pets">Pets</Link>
+                        </li>
+                        <li>
+                            <Link to="/Medicines">Medicamentos</Link>
+                        </li>
+                        <li>
+                            <Link to="/Vaccines">Vacinas</Link>
+                        </li>
+                    </ul>
+                ) : (
+                    <ul>
+                        <li>
+                            <Link to="/About">Cuidados Pet Family</Link>
+                        </li>
+                        <li>
+                            <Link to="/About">Sobre adoção</Link>
+                        </li>
+                    </ul>
+                )}
+            </nav>
+        </div>
     );
 }

@@ -11,48 +11,52 @@
 }
 
 header {
+  display: flex;
+  justify-content: flex-end; 
   position: absolute;
   width: 100%;
   height: 50px;
-  left: 0px;
-  right: 0px;
+  padding: 0, 20px;
   background-color: black;
-  display: flex;
-  justify-content: flex-end; 
-  margin: 0px;
-  padding: 0px;
 }
 
 .user-info {
   display: flex;
-  align-items: center; /* Alinha a imagem e o texto verticalmente */
-  padding: 20px;
-  font-family: 'Roboto';
-  font-style: normal;
-  font-size: 12px;
+  align-items: center;
+  margin-right: 25px;
 }
 
 .user-info img {
-  border-radius: 50%; /* Opcional: deixa a imagem circular */
-  margin-right: 20px; /* Espaço entre a imagem e o nome */
-  width: 30px; /* Ajuste conforme necessário */
-  height: 30px; /* Ajuste conforme necessário */
+  border-radius: 50%; 
   background: url(./assets/img/user.png);
-  background-repeat: no-repeat;
+  margin-right: 10px;
+  width: 30px; 
+  height: 30px; 
 }
 
+.user-info span {
+  font-family: 'Roboto', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 14px;
+  margin-right: 20px;
+  color: white;
+}
 
-/* body {
-  padding: 0px;
-  margin: 0px;
-  background-color: #EAEAEA;
-  font-family: 'Roboto';
-} */
+.user-info button {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  height: 30px;
+  font-family: 'Roboto', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 14px;
+  background-color: transparent; /* Fundo transparente */
+  color: white;
+}
 
-/* footer {
-  background-color: #3D6B42;
-  height: 50px;
-} */
+.user-info button:hover {
+  background-color: #CDA4C7;
+}
 
 .content-nav {
   background-color: #3D6B42;
