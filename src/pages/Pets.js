@@ -10,13 +10,13 @@ export default function Pets() {
   const [petList, setPetList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");  
-  const { data, error } = useQuery(gql`${GRAPHQL_GET_PET_QUERY}`);
+  const { data, error, refetch } = useQuery(gql`${GRAPHQL_GET_PET_QUERY}`);
 
   const [searchPets, { data: searchData, loading: searchLoading, error: searchError }] = useLazyQuery(
     gql`${GRAPHQL_GET_PET_SEARCH}`,
     { variables: { termo: searchTerm } }
   );
-
+  
   useEffect(() => {
     if (error) {
       setText(error.message);
@@ -34,6 +34,10 @@ export default function Pets() {
     }
   }, [searchData]);
 
+  useEffect(() => {
+    updatePetList(); // Atualiza a lista de pets sempre que a página é montada
+  }, []);
+  
   const handleSearch = (term) => {
     setSearchTerm(term);  
     if (term) {
@@ -41,6 +45,10 @@ export default function Pets() {
     } else {
       setPetList(data?.allPets || []);  // Reseta para a lista original se não houver termo
     }
+  };
+
+  const updatePetList = async () => {
+    await refetch(); // Atualiza a lista de pets
   };
 
   if (loading || searchLoading) return <div>{text}</div>;
@@ -60,7 +68,7 @@ export default function Pets() {
       <hr className="separator" />
       <section className="main-pets">
         {petList.length > 0 ? (
-          petList.map((p, index) => <PetCard key={index} Pet={p} />)
+          petList.map((p, index) => (<PetCard key={index} Pet={p}/>))
         ) : (
           <div>Não há pets disponíveis.</div>
         )}

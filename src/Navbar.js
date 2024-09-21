@@ -9,7 +9,7 @@ import banner from "./assets/img/banner_pets_family.png";
 
 export default function Navbar() {
     const [ user, setUser ] = useState({})
-    const navigate = useNavigate(); // Obtenha o histórico
+    const navigate = useNavigate(); 
 
     function handleCallBackResponse(response) {
         try {

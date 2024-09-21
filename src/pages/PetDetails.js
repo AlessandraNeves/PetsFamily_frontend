@@ -1,129 +1,158 @@
-import * as React from 'react';
 import '../styles/pet-details.css';
-
-import {useLocation } from "react-router-dom"
-
+import * as React from 'react';
+import { useLocation, useNavigate} from "react-router-dom";
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
 import IconButton from '@mui/material/IconButton';
-import Typography from "@mui/material/Typography";
-
-import noPhoto from "../assets/img/no_photo.png"
-// import Accordion from '@mui/material/Accordion';
-// import AccordionSummary from '@mui/material/AccordionSummary';
-// import AccordionDetails from '@mui/material/AccordionDetails';
-
+import noPhoto from "../assets/img/no_photo.png";
 import PetsIcon from '@mui/icons-material/PetsOutlined';
-// import VaccinesIcon from '@mui/icons-material/VaccinesOutlined';
-// import MedicationIcon from '@mui/icons-material/MedicationOutlined';
-// import HistoryIcon from '@mui/icons-material/HistoryOutlined';
-// import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
-// import PetMedicines from '../components/PetMedicines'
-// import PetVaccines from '../components/PetVaccines'
-// import PetHistory from '../components/PetHistory'
-
+import { GRAPHQL_ADD_PET_MUTATION, GRAPHQL_REMOVE_PET_MUTATION } from "../contexts/constants";
+import { useMutation, gql } from "@apollo/client";
 
 const PetDetails = () => {
-//export default function PetDetails() {
+  let { state } = useLocation();
 
-  let { state } = useLocation() ;
+  const navigate = useNavigate();
 
-  // const [expanded, setExpanded] = React.useState('medicine-panel');
+  const [petData, setPetData] = React.useState({
+    id: state?.pet?.id || '',
+    name: state?.pet?.name || '',
+    birthday: state?.pet?.birthday || '',
+    breed: state?.pet?.breed || '',
+    domain: state?.pet?.domain || '',
+    gender: state?.pet?.gender || '',
+    microchip: state?.pet?.microchip || '',
+    photo: state?.pet?.photo || '',
+    weight: state?.pet?.weight || '',
+  });
 
-  // const handleChange = (panel) => (event, newExpanded) => {
-  //   setExpanded(newExpanded ? panel : false);
-  // };
+  const [addPet, { loading: addingLoading, error: addingError }] = useMutation(gql`${GRAPHQL_ADD_PET_MUTATION}`);
+  const [removePet, { error: removingError }] = useMutation(gql`${GRAPHQL_REMOVE_PET_MUTATION}`);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setPetData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file && file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPetData(prev => ({ ...prev, photo: reader.result }));
+      };
+      reader.readAsDataURL(file);
+    } else {
+      alert("Por favor, selecione um arquivo de imagem válido.");
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await addPet({ variables: { input: petData } });
+      alert("Pet adicionado com sucesso!");
+    } catch (err) {
+      console.error(err);
+      alert("Erro ao adicionar o pet");
+    }
+  };
+
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    if (window.confirm("Você tem certeza que deseja excluir este pet?")) {
+      try {
+        await removePet({
+          variables: {
+            id: parseInt(petData.id, 10),
+          },
+        });
+        alert("Pet excluído com sucesso!");
+        navigate("/pets");
+      } catch (err) {
+        console.error(err);
+        alert("Erro ao excluir o pet");
+      }
+    }
+  };
 
   return (
-    <div className='content-pet-details'>
-      <div className='space-1'>
-        <Card>
-          <CardHeader
-            action={
-              <IconButton aria-label="settings">
-                <PetsIcon fontSize="large" color='secondary'/>
-              </IconButton>
-            }
-            title={state.pet.name}
-            subheader={state.pet.birthday}
-          />
-          <CardMedia
-            component="img"
-            height="194"
-            image={`${state.pet.photo? state.pet.photo : noPhoto}`}
-            alt="Pet"
-          />
-          <CardContent>
-            <Typography variant="subtitle1"  gutterBottom component="div">
-              {`${state.pet.domain} - ${state.pet.breed} - ${state.pet.gender? state.pet.gender : 'sem definição'} `}
-            </Typography>
-            <Typography variant="subtitle2" color="text.secondary">
-              <b>Peso:</b> {`${state.pet.weight} Kg`}
-            </Typography>
-            <Typography variant="subtitle2" color="text.secondary">
-              <b>Microchip:</b> {state.pet.microchip}
-            </Typography>
-          </CardContent>
+    <div>
+      <div className="pet-content">
+        <Card className="card-content">
+          <div className="column">
+            <CardHeader
+              action={
+                <IconButton aria-label="settings">
+                  <PetsIcon fontSize="large" color='secondary'/>
+                </IconButton>
+              }
+              title={petData.name || "Sem nome disponível"}
+              subheader={petData.birthday || "Data de nascimento desconhecida"}
+            />
+            <CardMedia
+              component="img"
+              height="194"
+              image={petData.photo || noPhoto}
+              alt="Pet"
+            />
+            <div>
+              <input type="file" accept="image/*" onChange={handleImageChange} />
+            </div>
+          </div>
+          <div className="column">
+            <form onSubmit={handleSubmit}>
+              <div className="input-group">
+                <div className="input-item">
+                  <label>Data de Nascimento:</label>
+                  <input type="text" name="birthday" value={petData.birthday} onChange={handleChange} required />
+                </div>
+                <div className="input-item">
+                  <label>Microchip:</label>
+                  <input type="number" name="microchip" value={petData.microchip} onChange={handleChange} required />
+                </div>
+              </div>
+              <div className="input-group">
+                <div className="input-item">
+                  <label>Tipo:</label>
+                  <input type="text" name="domain" value={petData.domain} onChange={handleChange} required />
+                </div>
+                <div className="input-item">
+                  <label>Gênero:</label>
+                  <select name="gender" value={petData.gender} onChange={handleChange} required>
+                    <option value="">Selecione</option>
+                    <option value="macho">Macho</option>
+                    <option value="fêmea">Fêmea</option>
+                  </select>
+                </div>
+              </div>
+              <div className="input-group">
+                <div className="input-item">
+                  <label>Raça:</label>
+                  <input type="text" name="breed" value={petData.breed} onChange={handleChange} />
+                </div>
+                <div className="input-item">
+                  <label>Peso (Kg):</label>
+                  <input type="number" step="0.1" name="weight" value={petData.weight} onChange={handleChange} required />
+                </div>
+              </div>
+              <div className="input-group">
+                <button type="submit" disabled={addingLoading}>
+                  {addingLoading ? 'Adicionando...' : 'Adicionar Pet'}
+                </button>
+                <button type="button" className="btn-secondary" onClick={handleDelete}>
+                  Excluir
+                </button>
+                {addingError && <p>Erro ao adicionar: {addingError.message}</p>}
+                {removingError && <p>Erro ao excluir: {removingError.message}</p>}
+              </div>
+            </form>
+          </div>
         </Card>
       </div>
-      {/* <div className='space-2'>
-       
-        <Accordion 
-          expanded={expanded==='medicine-panel'}
-          onChange={handleChange('medicine-panel')}
-        >
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="medicine-content"
-            id="medicine-header"
-          >
-            <MedicationIcon />
-            <Typography fontSize={18} fontWeight={400} paddingLeft={1}>Medicamento(s) prescrito(s)</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <PetMedicines medicines={state.pet.medicines} view={'pet'}/>
-          </AccordionDetails>
-        </Accordion>
-        
-        <Accordion 
-          expanded={expanded==='vaccine-panel'}
-          onChange={handleChange('vaccine-panel')}
-        >
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="vaccine-content"
-            id="vaccine-header"
-          >
-            <VaccinesIcon />
-            <Typography fontSize={18} fontWeight={400} paddingLeft={1}>Vacina(s) prescita(s)</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <PetVaccines vaccines={state.pet.vaccines}/>
-          </AccordionDetails>
-        </Accordion>
-        
-        <Accordion 
-          expanded={expanded==='history-panel'}
-          onChange={handleChange('history-panel')}
-        >
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="disease-content"
-            id="disease-header"
-          >
-            <HistoryIcon />
-            <Typography fontSize={18} fontWeight={400} paddingLeft={1}>Histórico de Saúde</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <PetHistory history={state.pet.history}/>
-          </AccordionDetails>
-        </Accordion>
-      </div> */}
     </div>
-  )
+  );
 }
 
-export default PetDetails
+export default PetDetails;

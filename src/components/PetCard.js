@@ -17,7 +17,7 @@ export default function Pet(props) {
                 <span className="pet-name">{pet_data.name}</span>
                 <span className="pet-birthday">{pet_data.birthday}</span>
             </Link>
-            <button className="btn-pet-schelude">AGENDAR</button>
+            {/* <button className="btn-pet-schelude">AGENDAR</button> */}
         </article>
     )
 }        

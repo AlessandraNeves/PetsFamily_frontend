@@ -50,11 +50,8 @@ header {
     color: #FFFFFF;
     margin: 0px 2px;
   }
-  
-
-  
+    
   .home-card {
-  
     justify-content: center;
     align-items: center;
     min-height: inherit;
