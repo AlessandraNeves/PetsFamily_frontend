@@ -1,14 +1,14 @@
-import '../styles/pet-details.css';
+import './style.css';
 import * as React from 'react';
 import { useLocation, useNavigate} from "react-router-dom";
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import IconButton from '@mui/material/IconButton';
-import noPhoto from "../assets/img/no_photo.png";
+import noPhoto from "../../assets/img/no_photo.png";
 import PetsIcon from '@mui/icons-material/PetsOutlined';
-import { GRAPHQL_ADD_PET_MUTATION, GRAPHQL_REMOVE_PET_MUTATION } from "../contexts/constants";
 import { useMutation, gql } from "@apollo/client";
+import { GRAPHQL_ADD_PET_MUTATION, GRAPHQL_REMOVE_PET_MUTATION } from "../../contants/graphQL";
 
 const PetDetails = () => {
   let { state } = useLocation();
@@ -137,9 +137,9 @@ const PetDetails = () => {
                   <input type="number" step="0.1" name="weight" value={petData.weight} onChange={handleChange} required />
                 </div>
               </div>
-              <div className="input-group">
+              <div className="button-group">
                 <button type="submit" disabled={addingLoading}>
-                  {addingLoading ? 'Adicionando...' : 'Adicionar Pet'}
+                  {addingLoading ? 'Salvando...' : 'Salvar'}
                 </button>
                 <button type="button" className="btn-secondary" onClick={handleDelete}>
                   Excluir

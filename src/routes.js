@@ -13,7 +13,6 @@ import useAuth from "./hooks/useAuth";
 const PrivateRoute = ({ Component }) => {
     const signed = useAuth();
     console.log(signed)
-    //return signed > 0 ? <Component /> : <SignIn />;
 };
 
 const RouterApp = () => {
@@ -26,8 +25,6 @@ const RouterApp = () => {
                 <Route path="/pets/:id" element={<PrivateRoute Component={PetDetails} />} />
                 <Route path="/medicines" element={<PrivateRoute Component={Medicines} />} />
                 <Route path="/vaccines" element={<PrivateRoute Component={Vaccines} />} />
-                {/* <Route path="/signup" element={<SignUp />} />
-                <Route path="*" element={<SignIn />} /> */}
             </Routes>
         </BrowserRouter>
     );

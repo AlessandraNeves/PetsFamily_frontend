@@ -1,0 +1,118 @@
+
+.card-content {
+    margin: 40px auto;
+    width: 60%;
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    gap: 20px; 
+    border: none;
+    background-color: #e7e7e76c;
+}
+
+.card {
+    border-radius: 5px; 
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.15); 
+    padding: 10px; 
+    margin: 10px auto; 
+    display: flex; 
+    justify-content: center; 
+  }
+  
+.column {
+    padding: 10px; 
+    margin-top: 30px;
+    background-color: #f9f9f96c; 
+    border-radius: 3px; 
+    display: flex;
+    flex-direction: column;
+  }
+
+/* Fundo cinza claro no container principal */
+/* .content-pet-details {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+  }
+   */
+  
+
+  /* Estilo das labels e inputs */
+  label, input[type="text"], input[type="number"], select {
+    font-family: 'Roboto', 'Calibri', sans-serif; 
+    color: #000; 
+    font-size: 14px; 
+  }
+
+  select {
+    /* width: 80%; */
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: #fff; /* Cor de fundo para manter a aparência */  
+  }
+
+  /* Estilo das labels e inputs */
+  input[type="file"] {
+      font-family: 'Roboto', 'Calibri', sans-serif; 
+      color: #707070; 
+      font-size: 12px; 
+      display: block; 
+      margin-bottom: 10px;
+  
+    }
+  
+  input[type="text"], input[type="number"] {
+    /* width: 80%; */
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 10px; 
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; 
+  }
+  
+  .input-group {
+    display: flex;
+    padding-left: 10px;
+    justify-content: space-between;
+    margin-bottom: 10px; 
+  }
+  
+  .input-item {
+    display: flex;
+    flex-direction: column;
+    width: 48%; 
+  }
+  
+  .button-group {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 10px; 
+  }
+
+  button {
+    padding: 10px 20px;
+    background-color: #7b1fa2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button[disabled] {
+    background-color: #ccc;
+  }
+  
+  button:not([disabled]):hover {
+    background-color: #7b1fa2;
+  }
+  
+  .btn-secondary {
+    background-color: #8c8b8c;
+    color: white;
+    border: none;
+  }

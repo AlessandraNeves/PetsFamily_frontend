@@ -1,11 +1,10 @@
-import "../styles/pet.css"
-import noPhoto from "../assets/img/no_photo.png"
-
+import './style.css';
 import { Link } from "react-router-dom"
+import noPhoto from "../../assets/img/no_photo.png"
 
-export default function Pet(props) {
+export default function Pet(pet) {
 
-    const pet_data = props.Pet
+    const pet_data = pet.Pet
 
     return (
         <article className="pet-card">
@@ -17,8 +16,6 @@ export default function Pet(props) {
                 <span className="pet-name">{pet_data.name}</span>
                 <span className="pet-birthday">{pet_data.birthday}</span>
             </Link>
-            {/* <button className="btn-pet-schelude">AGENDAR</button> */}
         </article>
     )
 }        
-

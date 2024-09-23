@@ -1,11 +1,10 @@
 
+import "./global.css";
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { LOGIN_CLIENT_ID } from "./contexts/constants"
+import { LOGIN_CLIENT_ID } from "./contants/login"
 import { jwtDecode } from 'jwt-decode';
-
-import "./global.css";
-import banner from "./assets/img/banner_pets_family.png";
+import banner from "./assets/img/banner.png";
 
 export default function Navbar() {
     const [ user, setUser ] = useState({})
@@ -90,7 +89,7 @@ export default function Navbar() {
                             <Link to="/About">Sobre adoção</Link>
                         </li>
                     </ul>
-                )}
+                )} 
             </nav>
         </div>
     );

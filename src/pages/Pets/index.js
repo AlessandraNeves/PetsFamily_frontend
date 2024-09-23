@@ -1,9 +1,9 @@
-import "../styles/pet.css";
-import SearchBar from "../components/SearchBar";
-import PetCard from "../components/PetCard";
-import { GRAPHQL_GET_PET_QUERY, GRAPHQL_GET_PET_SEARCH } from "../contexts/constants";
+import './style.css';
+import SearchBar from "../../components/SearchBar";
+import PetCard from "../../components/petCard";
 import { useState, useEffect } from "react";
 import { useQuery, useLazyQuery, gql } from "@apollo/client";
+import { GRAPHQL_GET_PET_QUERY, GRAPHQL_GET_PET_SEARCH } from "../../contants/graphQL";
 
 export default function Pets() {
   const [text, setText] = useState("...Carregando, aguarde...");
@@ -35,20 +35,20 @@ export default function Pets() {
   }, [searchData]);
 
   useEffect(() => {
-    updatePetList(); // Atualiza a lista de pets sempre que a página é montada
+    updatePetList();
   }, []);
-  
+
   const handleSearch = (term) => {
     setSearchTerm(term);  
     if (term) {
       searchPets();  
     } else {
-      setPetList(data?.allPets || []);  // Reseta para a lista original se não houver termo
+      setPetList(data?.allPets || []);  
     }
   };
 
   const updatePetList = async () => {
-    await refetch(); // Atualiza a lista de pets
+    await refetch(); 
   };
 
   if (loading || searchLoading) return <div>{text}</div>;

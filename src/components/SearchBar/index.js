@@ -1,3 +1,4 @@
+import './style.css';
 import SearchIcon from '@mui/icons-material/Search';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -23,16 +24,16 @@ export default function SearchBar({ placeholder, onSearch }) {
                     sx={{
                         width: '180px',
                         '& .MuiInput-underline:before': {
-                            borderBottomColor: '#3D6B42', // Cor da borda antes de focar
+                            borderBottomColor: '#3D6B42', 
                         },
                         '& .MuiInput-underline:after': {
-                            borderBottomColor: '#3D6B42', // Cor da borda depois de focar
+                            borderBottomColor: '#3D6B42',
                         },
                         '& .MuiInputLabel-root': {
-                            color: '#3D6B42', // Cor do label padrão
+                            color: '#3D6B42', 
                         },
                         '& .MuiInputLabel-root.Mui-focused': {
-                            color: '#3D6B42', // Cor do label quando focado
+                            color: '#3D6B42', 
                         },
                     }}
                     id="input-with-sx"
@@ -41,7 +42,7 @@ export default function SearchBar({ placeholder, onSearch }) {
                     value={searchTerm}
                     onChange={handleInputChange}
                     InputProps={{
-                        style: { color: '#3D6B42' }, // Cor do texto digitado
+                        style: { color: '#3D6B42' }, 
                     }}
                 />
                 <SearchIcon

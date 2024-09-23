@@ -19,7 +19,6 @@ export default function App() {
         <div>
             <Routes>
               <Route path="/" element={<Home/>}></Route>
-              {/* <Route path="/signin" element={<SignIn/>}></Route> */}
               <Route path="/pets" element={<Pets/>}></Route>
               <Route path="/pets/:id" element={<PetDetails/>}></Route>
               <Route path="/medicines" element={<Medicines/>}></Route>
