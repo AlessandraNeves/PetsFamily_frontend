@@ -4,6 +4,8 @@ import PetCard from "../../components/petCard";
 import { useState, useEffect } from "react";
 import { useQuery, useLazyQuery, gql } from "@apollo/client";
 import { GRAPHQL_GET_PET_QUERY, GRAPHQL_GET_PET_SEARCH } from "../../contants/graphQL";
+import { useNavigate } from "react-router-dom";
+
 
 export default function Pets() {
   const [text, setText] = useState("...Carregando, aguarde...");
@@ -11,6 +13,7 @@ export default function Pets() {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");  
   const { data, error, refetch } = useQuery(gql`${GRAPHQL_GET_PET_QUERY}`);
+  const navigate = useNavigate();
 
   const [searchPets, { data: searchData, loading: searchLoading, error: searchError }] = useLazyQuery(
     gql`${GRAPHQL_GET_PET_SEARCH}`,
@@ -38,6 +41,10 @@ export default function Pets() {
     updatePetList();
   }, []);
 
+  const handleAddPet = () => {
+    navigate("/pets/add"); // Substitua pela rota correta de PetDetails
+  };
+
   const handleSearch = (term) => {
     setSearchTerm(term);  
     if (term) {
@@ -58,7 +65,7 @@ export default function Pets() {
     <div className="content-pet">
       <div className="header-pet">
         <div className="header-pet-btn">
-          <button className="btn-pet-add">+ ADICIONAR PET</button>
+          <button className="btn-pet-add" onClick={handleAddPet}>+ ADICIONAR PET</button>
         </div>
         <div className="header-pet-search">
           <SearchBar placeholder="Pesquisar por nome" onSearch={handleSearch} />

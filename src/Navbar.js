@@ -1,4 +1,3 @@
-
 import "./global.css";
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -6,15 +5,38 @@ import { LOGIN_CLIENT_ID } from "./contants/login"
 import { jwtDecode } from 'jwt-decode';
 import banner from "./assets/img/banner.png";
 
+const NavLinks = ({ isAuthenticated }) => {
+    const links = isAuthenticated
+        ? [
+            { to: "/About", label: "Adoção" },
+            { to: "/tutor", label: "Tutor" },
+            { to: "/pets", label: "Pets" },
+            { to: "/medicines", label: "Medicamentos" },
+            { to: "/vaccines", label: "Vacinas" }
+        ]
+        : [
+            { to: "/About", label: "Sobre adoção" }
+        ];
+
+    return (
+        <ul>
+            {links.map(link => (
+                <li key={link.to}>
+                    <Link to={link.to}>{link.label}</Link>
+                </li>
+            ))}
+        </ul>
+    );
+};
+
 export default function Navbar() {
-    const [ user, setUser ] = useState({})
+    const [user, setUser] = useState({});
     const navigate = useNavigate(); 
 
     function handleCallBackResponse(response) {
         try {
             const userObject = jwtDecode(response.credential);
             setUser(userObject);
-
         } catch (error) {
             console.error("Error decoding JWT:", error);
         }
@@ -22,7 +44,6 @@ export default function Navbar() {
   
     function handleSignIn() {
         google.accounts.id.prompt(); 
-        console.log("passei");
     }
 
     function handleSignOut(event) {
@@ -34,20 +55,20 @@ export default function Navbar() {
     useEffect(() => {
         /* global google */
         google.accounts.id.initialize({
-          client_id: LOGIN_CLIENT_ID,
-          callback: handleCallBackResponse
+            client_id: LOGIN_CLIENT_ID,
+            callback: handleCallBackResponse
         });
-    
-      }, []);
+    }, []);
 
     return (
         <div>
-            <header >
+            <header>
                 <div className="user-info">
                     {Object.keys(user).length !== 0 ? (
                         <>
                             <img src={user.picture} alt="User" />
                             <span>{user.name}</span>
+                            <div className="login-separator"></div>
                             <button onClick={handleSignOut}>Sair</button>
                         </>
                     ) : (
@@ -59,37 +80,7 @@ export default function Navbar() {
                 <Link to="/">
                     <img className="banner" src={banner} alt="Banner" />
                 </Link>
-                {Object.keys(user).length !== 0 ? (
-                    <ul>
-                        <li>
-                            <Link to="/About">Cuidados Pet Family</Link>
-                        </li>
-                        <li>
-                            <Link to="/About">Sobre adoção</Link>
-                        </li>
-                        <li>
-                            <Link to="/Tutor">Tutor</Link>
-                        </li>
-                        <li>
-                            <Link to="/Pets">Pets</Link>
-                        </li>
-                        <li>
-                            <Link to="/Medicines">Medicamentos</Link>
-                        </li>
-                        <li>
-                            <Link to="/Vaccines">Vacinas</Link>
-                        </li>
-                    </ul>
-                ) : (
-                    <ul>
-                        <li>
-                            <Link to="/About">Cuidados Pet Family</Link>
-                        </li>
-                        <li>
-                            <Link to="/About">Sobre adoção</Link>
-                        </li>
-                    </ul>
-                )} 
+                <NavLinks isAuthenticated={Object.keys(user).length !== 0} />
             </nav>
         </div>
     );
