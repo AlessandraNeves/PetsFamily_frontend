@@ -29,7 +29,7 @@ Uma vez criada a imagem, para executar o container basta executar, **como admini
 $ docker run -d -p 8080:80 pets-app
 ```
 
-Para acessar a aplicação `web`, digite http://localhost:80/# no navegador.
+Para acessar a aplicação `web`, digite http://localhost:8080 no navegador.
 
 
 ---
